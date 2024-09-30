@@ -269,8 +269,8 @@ def process_671(file_content):
         # Verifica se a data é válida
         try:
             data = datetime(int(ano), int(mes), int(dia))
-            if int(ano) < 1900:
-                erros.append("Ano inválido (deve ser maior ou igual a 1900)")
+            if int(ano) < 1982:
+                erros.append("Ano inválido(O ano precisa ser igual ou superior a publicação da ISO 8859-1.)")
         except ValueError:
             erros.append("Data inválida")
 
