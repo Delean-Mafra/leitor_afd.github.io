@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Arquivo AFD</title>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython_stdlib.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="brython()">
+    <div class="container">
+        <h1>Leitor de Arquivo AFD</h1>
+        <div class="input-group">
+            <input type="file" id="file-input" accept=".txt">
+            <select id="file-type">
+                <option value="1510">1510</option>
+                <option value="671">671</option>
+            </select>
+            <button id="process-btn">Processar Arquivo</button>
+        </div>
+        <div id="output"></div>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById('process-btn').addEventListener('click', () => {
+            const fileType = document.getElementById('file-type').value;
+            const fileInput = document.getElementById('file-input');
+
+            if (!fileInput.files.length) {
+                alert('Por favor, selecione um arquivo.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const content = e.target.result;
+                if (fileType === '1510') {
+                    loadScript('1510.js', () => {
+                        validate1510(content); // Chama a função do script 1510
+                    });
+                } else if (fileType === '671') {
+                    loadScript('671.js', () => {
+                        processFile671(content); // Chama a função do script 671
+                    });
+                }
+            };
+
+            reader.readAsText(file);
+        });
+
+        // Função para carregar dinamicamente o script JavaScript
+        function loadScript(src, callback) {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = callback;
+            document.head.appendChild(script);
+        }
+    </script>
+<script type="text/python">
+from browser import document, window
+
+def disable_right_click(event):
+    event.preventDefault()
+
+document.bind('contextmenu', disable_right_click)
+
+def disable_keys(event):
+    
+    if event.keyCode == 123:
+        event.preventDefault()
+    
+    if event.ctrlKey and event.shiftKey and event.keyCode == 73:
+        event.preventDefault()
+    
+    if event.ctrlKey and event.shiftKey and event.keyCode == 67:
+        event.preventDefault()
+    
+    if event.ctrlKey and event.shiftKey and event.keyCode == 74:
+        event.preventDefault()
+    
+    if event.ctrlKey and event.keyCode == 85:
+        event.preventDefault()
+   
+    if (event.ctrlKey or event.metaKey) and event.keyCode == 83:
+        event.preventDefault()
+    
+    if (event.ctrlKey or event.metaKey) and event.keyCode == 75:
+        event.preventDefault()
+    
+    if (event.ctrlKey or event.metaKey) and event.keyCode == 69:
+        event.preventDefault()
+    
+    if (event.ctrlKey or event.metaKey) and event.keyCode == 76:
+        event.preventDefault()
+
+window.bind('keydown', disable_keys)
+
+def disable_drag(event):
+    event.preventDefault()
+
+document.bind('dragstart', disable_drag)
+
+#def redirect_on_mouse_leave(event):
+#    if event.clientY <= 0:
+#        window.location.href = "https://bit.ly/leitor-de-afd"
+#window.bind('mouseout', redirect_on_mouse_leave)
+
+</script>
+</body>
+</html>
