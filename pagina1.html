@@ -15,7 +15,7 @@
             <input type="file" id="file-input" accept=".txt">
             <select id="file-type">
                 <option value="595">595</option>
-                <option value="671">671</option>
+                <option value="3869">3869</option>
             </select>
             <button id="process-btn">Processar Arquivo</button>
         </div>
@@ -41,7 +41,7 @@
                     loadScript('595.js', () => {
                         validate595(content); // Chama a função do script 595
                     });
-                } else if (fileType === '671') {
+                } else if (fileType === '3869') {
                     loadScript('671.js', () => {
                         processFile671(content); // Chama a função do script 671
                     });
